@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/app-parcial",
+            "outputPath": "dist/app-productos-y-facturacion",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "AppParcial:build:production"
+              "buildTarget": "AppProductosYFacturacion:build:production"
             },
             "development": {
-              "buildTarget": "AppParcial:build:development"
+              "buildTarget": "AppProductosYFacturacion:build:development"
             }
           },
           "defaultConfiguration": "development"

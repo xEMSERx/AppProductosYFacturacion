@@ -1,5 +1,5 @@
 {
-  "name": "app-parcial",
+  "name": "app-productos-y-facturacion",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -33,5 +33,18 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.7.2"
-  }
+  },
+  "description": "<<<<<<< HEAD\r # AppParcial",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xEMSERx/AppProductosYFacturacion.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xEMSERx/AppProductosYFacturacion/issues"
+  },
+  "homepage": "https://github.com/xEMSERx/AppProductosYFacturacion#readme"
 }
