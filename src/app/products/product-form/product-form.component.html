@@ -1,1 +1,27 @@
-<p>product-form works!</p>
+<h3>{{ product?.id ? 'Edit Product' : 'Add Product' }}</h3>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <label>
+    Name:
+    <input formControlName="nombre" />
+  </label>
+  <label>
+    Description:
+    <input formControlName="descripcion" />
+  </label>
+  <label>
+    Price:
+    <input type="number" formControlName="precio" />
+  </label>
+  <label>
+    Category:
+    <input formControlName="categoria" />
+  </label>
+  <label>
+    Image URL:
+    <input formControlName="imagen" />
+  </label>
+  <button type="submit" [disabled]="productForm.invalid">
+    {{ product?.id ? 'Update' : 'Add' }}
+  </button>
+</form>
+<button (click)="saved.emit()">Cancel</button>

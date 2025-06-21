@@ -1,1 +1,25 @@
-<p>product-list works!</p>
+<h2>Product List</h2>
+
+<input type="text" placeholder="Search..." [(ngModel)]="searchText" />
+
+<ul>
+  <li *ngFor="let product of products | productFilter:searchText">
+    {{ product.nombre }} - {{ product.categoria }} - ${{ product.precio }}
+    <button (click)="selectProduct(product)">Edit</button>
+    <button (click)="deleteProduct(product.id)">Delete</button>
+    <button (click)="selectedProduct = product">Details</button>
+  </li>
+</ul>
+
+<!-- Formulario para agregar/editar -->
+<app-product-form
+  *ngIf="selectedProduct"
+  [product]="selectedProduct"
+  (saved)="loadProducts(); selectedProduct = null">
+</app-product-form>
+
+<!-- Detalles del producto -->
+<app-product-detail
+  *ngIf="selectedProduct"
+  [product]="selectedProduct">
+</app-product-detail>
