@@ -1,27 +1,27 @@
-<h3>{{ product?.id ? 'Edit Product' : 'Add Product' }}</h3>
+<h3>{{ product?.id ? 'Editar Producto' : 'Agregar Producto' }}</h3>
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
   <label>
-    Name:
+    Nombre:
     <input formControlName="nombre" />
   </label>
   <label>
-    Description:
+    Descripción:
     <input formControlName="descripcion" />
   </label>
   <label>
-    Price:
+    Precio:
     <input type="number" formControlName="precio" />
   </label>
   <label>
-    Category:
+    Categoría:
     <input formControlName="categoria" />
   </label>
   <label>
-    Image URL:
+    URL de Imagen:
     <input formControlName="imagen" />
   </label>
   <button type="submit" [disabled]="productForm.invalid">
-    {{ product?.id ? 'Update' : 'Add' }}
+    {{ product?.id ? 'Actualizar' : 'Agregar' }}
   </button>
 </form>
-<button (click)="saved.emit()">Cancel</button>
+<button (click)="saved.emit()">Cancelar</button>
