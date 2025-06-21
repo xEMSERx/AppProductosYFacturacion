@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Producto } from '../models/product.model';
+import { Product } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
-export class ProductoService {
+export class ProductService {
   private apiUrl = 'http://localhost:3000/productos'; // Cambia la URL según tu backend
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.apiUrl);
+  getAll(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}/${id}`);
+  getById(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
-  add(producto: Producto): Observable<Producto> {
-    return this.http.post<Producto>(this.apiUrl, producto);
+  add(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, product);
   }
 
-  update(producto: Producto): Observable<Producto> {
-    return this.http.put<Producto>(`${this.apiUrl}/${producto.id}`, producto);
+  update(product: Product): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/${product.id}`, product);
   }
 
   delete(id: number): Observable<void> {
