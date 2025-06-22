@@ -15,5 +15,5 @@ db.query(crearTablaUsuarios, (err, result) => {
   } else {
     console.log('✅ Tabla "usuarios" creada o ya existente.');
   }
-  process.exit(); // Finaliza el script
+  process.exit();
 });

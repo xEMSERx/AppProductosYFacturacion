@@ -11,14 +11,14 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 const register = (req, res) => {
-  const { nombre, email, password } = req.body;
-  if (!nombre || !email || !password) return res.status(400).json({ error: "Faltan datos" });
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) return res.status(400).json({ error: "Faltan datos" });
 
   User.findByEmail(email, (err, data) => {
     if (data.length > 0) return res.status(400).json({ error: "Usuario ya existe" });
 
     const hashedPassword = bcrypt.hashSync(password, 10);
-    User.create(nombre, email, hashedPassword, (err, result) => {
+    User.create(username, email, hashedPassword, (err, result) => {
       if (err) return res.status(500).json({ error: "Error al registrar usuario" });
       res.status(201).json({ mensaje: "Usuario registrado correctamente" });
     });
