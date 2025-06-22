@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,22 +18,24 @@ export class LoginComponent {
   loginForm: FormGroup;
   error: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
 
-  onSubmit(): void {
-    if (this.loginForm.invalid) return;
+onSubmit(): void {
+  if (this.loginForm.invalid) return;
 
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (response) => {
-        console.log('Login exitoso!', response);
-        localStorage.setItem('token', response.token);
-        // Redirigir o mostrar mensaje si querés
-      },
+  this.authService.login(this.loginForm.value).subscribe({
+    next: (response) => {
+      console.log('Login exitoso!', response);
+      localStorage.setItem('token', response.token);
+
+      // Redirigimos al formulario de producto
+      this.router.navigate(['/products/form']);
+    },
       error: (err) => {
         console.error('Error en login:', err);
         this.error = err.error?.error || 'Error al iniciar sesión';
