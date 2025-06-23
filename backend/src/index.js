@@ -2,26 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// Cargar variables de entorno
-dotenv.config();
+dotenv.config(); // Cargar variables de entorno
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
-app.use(cors());
+app.use(cors()); // Middlewares
 app.use(express.json()); // para leer JSON en los body
 
-// Rutas
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authRoutes'); // Rutas
 app.use('/api', authRoutes);
 
-// Ruta base
-app.get('/', (req, res) => {
+app.get('/', (req, res) => { // Ruta base
   res.send('API funcionando correctamente ✅');
 });
 
-// Iniciar servidor
-app.listen(PORT, () => {
+app.listen(PORT, () => { // Iniciar servidor
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });

@@ -1,8 +1,7 @@
 const mysql = require('mysql2');
-require('dotenv').config({ path: __dirname + '/../../.env' }); // cargar sólo una vez
+require('dotenv').config({ path: __dirname + '/../../.env' }); // Cargar sólo una vez
 
-// Crear la conexión a la base de datos
-const connection = mysql.createConnection({
+const connection = mysql.createConnection({ // Crear la conexión a la base de datos
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
@@ -15,9 +14,7 @@ console.log('Contraseña:', process.env.DB_PASS);
 console.log('Base de datos:', process.env.DB_NAME);
 console.log(process.env);
 
-
-// Conectar y verificar errores
-connection.connect(err => {
+connection.connect(err => { // Conectar y verificar errores
   if (err) {
     console.error('❌ Error al conectar a MySQL:', err.message);
     return;

@@ -1,0 +1,20 @@
+<h2>Factura</h2>
+<table>
+  <tr>
+    <th>Producto</th>
+    <th>Cantidad</th>
+    <th>Precio unitario (ARS)</th>
+    <th>Subtotal (ARS)</th>
+    <th>Subtotal (USD)</th>
+  </tr>
+  <tr *ngFor="let p of productos">
+    <td>{{ p.nombre }}</td>
+    <td>{{ p.cantidad }}</td>
+    <td>{{ p.precio | number:'1.2-2' }}</td>
+    <td>{{ (p.precio * p.cantidad) | number:'1.2-2' }}</td>
+    <td>{{ ((p.precio * p.cantidad) / tipoCambioUSD) | number:'1.2-2' }}</td>
+  </tr>
+</table>
+<p><strong>Total ARS:</strong> {{ totalARS | number:'1.2-2' }}</p>
+<p><strong>Total USD:</strong> {{ totalUSD | number:'1.2-2' }}</p>
+<button (click)="confirmar()">Confirmar compra</button>

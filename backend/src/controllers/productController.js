@@ -1,7 +1,6 @@
 const db = require('../config/db');
 
-// Crear la tabla products si no existe
-exports.createProductsTable = (req, res) => {
+exports.createProductsTable = (req, res) => { // Crear la tabla products si no existe
   const sql = `
     CREATE TABLE IF NOT EXISTS products (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,16 +21,14 @@ exports.createProductsTable = (req, res) => {
   });
 };
 
-// Obtener todos los productos
-exports.getAll = (req, res) => {
+exports.getAll = (req, res) => { // Obtener todos los productos
   db.query('SELECT * FROM products', (err, results) => {
     if (err) return res.status(500).json({ error: err });
     res.json(results);
   });
 };
 
-// Crear un producto
-exports.create = (req, res) => {
+exports.create = (req, res) => { // Crear un producto
   const { nombre, descripcion, precio, categoria, imagen } = req.body;
   db.query(
     'INSERT INTO products (nombre, descripcion, precio, categoria, imagen) VALUES (?, ?, ?, ?, ?)',
@@ -43,8 +40,7 @@ exports.create = (req, res) => {
   );
 };
 
-// Actualizar un producto
-exports.update = (req, res) => {
+exports.update = (req, res) => { // Actualizar un producto
   const { id } = req.params;
   const { nombre, descripcion, precio, categoria, imagen } = req.body;
   db.query(
@@ -58,8 +54,7 @@ exports.update = (req, res) => {
   );
 };
 
-// Eliminar un producto
-exports.remove = (req, res) => {
+exports.remove = (req, res) => { // Eliminar un producto
   const { id } = req.params;
   db.query('DELETE FROM products WHERE id = ?', [id], (err, result) => {
     if (err) return res.status(500).json({ error: err });
@@ -68,8 +63,7 @@ exports.remove = (req, res) => {
   });
 };
 
-// Obtener un producto por ID (opcional)
-exports.getById = (req, res) => {
+exports.getById = (req, res) => { // Obtener un producto por ID (opcional)
   const { id } = req.params;
   db.query('SELECT * FROM products WHERE id = ?', [id], (err, results) => {
     if (err) return res.status(500).json({ error: err });

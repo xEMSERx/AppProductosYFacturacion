@@ -2,22 +2,16 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 
-// Crear la tabla de productos si no existe
-router.post('/create-table', productController.createProductsTable);
+router.post('/create-table', productController.createProductsTable); // Crear la tabla de productos si no existe
 
-// Obtener todos los productos
-router.get('/', productController.getAll);
+router.get('/', productController.getAll); // Obtener todos los productos
 
-// Obtener un producto por ID
-router.get('/:id', productController.getById);
+router.get('/:id', productController.getById); // Obtener un producto por ID
 
-// Crear un producto
-router.post('/', productController.create);
+router.post('/', productController.create); // Crear un producto
 
-// Actualizar un producto
-router.put('/:id', productController.update);
+router.put('/:id', productController.update); // Actualizar un producto
 
-// Eliminar un producto
-router.delete('/:id', productController.remove);
+router.delete('/:id', productController.remove); // Eliminar un producto
 
 module.exports = router;
