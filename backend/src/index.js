@@ -7,7 +7,7 @@ dotenv.config(); // Cargar variables de entorno
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors()); // Middlewares
+app.use(cors());
 app.use(express.json()); // para leer JSON en los body
 
 const authRoutes = require('./routes/authRoutes'); // Rutas

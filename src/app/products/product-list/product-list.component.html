@@ -1,8 +1,7 @@
 <div class="card p-4 mb-4">
   <h2 class="mb-3">Lista de Productos</h2>
 
-  <!-- Campo de búsqueda -->
-  <div class="mb-3">
+  <div class="mb-3"> <!-- Campo de búsqueda -->
     <input
       type="text"
       class="form-control"
@@ -11,8 +10,7 @@
     />
   </div>
 
-  <!-- Lista de productos -->
-  <ul class="list-group mb-4">
+  <ul class="list-group mb-4"> <!-- Lista de productos -->
     <li
       class="list-group-item d-flex justify-content-between align-items-start flex-wrap"
       *ngFor="let product of products | productFilter:searchText"
@@ -22,33 +20,16 @@
         <span class="text-muted">$ {{ product.precio }}</span>
       </div>
       <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
-        <!-- Agregar a factura -->
-        <button class="btn btn-sm btn-outline-primary" (click)="addProduct(product)">
-          Agregar a factura
-        </button>
-
-        <!-- Quitar de factura -->
-        <button
-          class="btn btn-sm btn-outline-danger"
-          (click)="removeProduct(product)"
-          [disabled]="!isProductSelected(product)"
-        >
-          Quitar
-        </button>
-
-        <!-- Cantidad seleccionada -->
-        <span *ngIf="getSelectedProductQuantity(product) > 0" class="badge bg-secondary">
-          Cantidad: {{ getSelectedProductQuantity(product) }}
-        </span>
+        <button class="btn btn-sm btn-outline-primary" (click)="addProduct(product)">Agregar a factura</button>
+        <button class="btn btn-sm btn-outline-danger" (click)="removeProduct(product)" [disabled]="!isProductSelected(product)">Quitar</button>
+        <span *ngIf="getSelectedProductQuantity(product) > 0" class="badge bg-secondary">Cantidad: {{ getSelectedProductQuantity(product) }}</span>
       </div>
     </li>
   </ul>
 
-  <!-- Mensaje si no hay productos -->
-  <p *ngIf="products.length === 0" class="text-muted">No hay productos cargados.</p>
+  <p *ngIf="products.length === 0" class="text-muted">No hay productos cargados.</p> <!-- Mensaje si no hay productos -->
 </div>
 
-<!-- Factura con productos seleccionados -->
-<div class="card p-4">
+<div class="card p-4"> <!-- Factura con productos seleccionados -->
   <app-invoice [productos]="selectedProducts"></app-invoice>
 </div>

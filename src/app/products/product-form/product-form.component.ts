@@ -69,16 +69,16 @@ export class ProductFormComponent implements OnInit, OnChanges {
   }
 
   deleteProduct(product: Product) {
-if (confirm('¿Estás seguro de que querés eliminar el producto?')) {
-this.productService.delete(product.id!).subscribe(() => {
-this.loadProducts();
-if (this.selectedProduct?.id === product.id) {
-this.productForm.reset();
-this.selectedProduct = null;
-}
-});
-}
-}
+    if (confirm('¿Estás seguro de que querés eliminar el producto?')) {
+      this.productService.delete(product.id!).subscribe(() => {
+        this.loadProducts();
+        if (this.selectedProduct?.id === product.id) {
+        this.productForm.reset();
+        this.selectedProduct = null;
+        }
+      });
+    }
+  }
 
   loadProducts() {
     this.productService.getAll().subscribe(data => {

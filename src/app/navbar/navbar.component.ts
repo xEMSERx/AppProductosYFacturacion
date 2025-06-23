@@ -34,7 +34,7 @@ export class NavbarComponent {
   }
 
   loginAsAdmin() {
-    if (this.adminPassword === 'admin123') { // Cambia la contraseña aquí si lo deseas
+    if (this.adminPassword === 'admin123') {
       this.isAdmin = true;
       localStorage.setItem('role', 'admin');
       this.showAdminInput = false;
