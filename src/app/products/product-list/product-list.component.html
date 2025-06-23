@@ -3,20 +3,10 @@
 <!-- Campo de búsqueda -->
 <input type="text" placeholder="Buscar producto..." [(ngModel)]="searchText" />
 
-<!-- Botón para crear un nuevo producto -->
-<button 
-  (click)="selectedProduct = { id: 0, nombre: '', descripcion: '', precio: 0, categoria: '', imagen: '' }">
-  Nuevo Producto
-</button>
-
 <!-- Lista de productos -->
 <ul>
   <li *ngFor="let product of products | productFilter:searchText">
     {{ product.nombre }} - {{ product.categoria }} - ${{ product.precio }}
-
-    <button (click)="selectProduct(product)">Editar</button>
-    <button (click)="deleteProduct(product.id)">Eliminar</button>
-    <button (click)="selectedProduct = product">Ver Detalles</button>
 
     <!-- Selección para factura -->
     <button (click)="addProduct(product)">Agregar a factura</button>
@@ -33,19 +23,6 @@
 
 <!-- Mensaje si no hay productos -->
 <p *ngIf="products.length === 0">No hay productos cargados.</p>
-
-<!-- Formulario para agregar o editar -->
-<app-product-form
-  *ngIf="selectedProduct"
-  [product]="selectedProduct"
-  (saved)="loadProducts(); selectedProduct = null">
-</app-product-form>
-
-<!-- Detalles del producto -->
-<app-product-detail
-  *ngIf="selectedProduct"
-  [product]="selectedProduct">
-</app-product-detail>
 
 <!-- Factura con productos seleccionados -->
 <app-invoice [productos]="selectedProducts"></app-invoice>

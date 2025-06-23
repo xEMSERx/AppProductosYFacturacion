@@ -1,21 +1,25 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule],
 })
-export class ProductFormComponent {
+export class ProductFormComponent implements OnInit, OnChanges {
   @Input() product: Product | null = null;
   @Output() saved = new EventEmitter<void>();
 
-  productForm: FormGroup;
+  productForm!: FormGroup;
+  products: Product[] = [];
 
-  constructor(private fb: FormBuilder, private productService: ProductService) {
+  constructor(private fb: FormBuilder, private productService: ProductService) {}
+
+  ngOnInit() {
     this.productForm = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: [''],
@@ -23,13 +27,21 @@ export class ProductFormComponent {
       categoria: ['', Validators.required],
       imagen: ['']
     });
-  }
 
-  ngOnChanges() {
     if (this.product) {
       this.productForm.patchValue(this.product);
-    } else {
-      this.productForm.reset();
+    }
+
+    this.loadProducts();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['product'] && this.productForm) {
+      if (this.product) {
+        this.productForm.patchValue(this.product);
+      } else {
+        this.productForm.reset();
+      }
     }
   }
 
@@ -37,10 +49,31 @@ export class ProductFormComponent {
     if (this.productForm.valid) {
       const productData = { ...this.product, ...this.productForm.value };
       if (this.product && this.product.id) {
-        this.productService.update(productData).subscribe(() => this.saved.emit());
+        this.productService.update(productData).subscribe({
+          next: () => {
+            this.saved.emit();
+            this.loadProducts();
+          },
+          error: (err) => console.error('Error al actualizar producto:', err)
+        });
       } else {
-        this.productService.add(productData).subscribe(() => this.saved.emit());
+        this.productService.add(productData).subscribe({
+          next: () => {
+            this.saved.emit();
+            this.productForm.reset();
+            this.loadProducts();
+          },
+          error: (err) => console.error('Error al agregar producto:', err)
+        });
       }
     }
+  }
+
+  onCancel() {
+    this.saved.emit();
+  }
+
+  loadProducts() {
+    this.productService.getAll().subscribe(data => this.products = data);
   }
 }
