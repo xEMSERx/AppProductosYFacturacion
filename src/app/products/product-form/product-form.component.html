@@ -1,36 +1,36 @@
-<h3>{{ product?.id ? 'Editar Producto' : 'Agregar Producto' }}</h3>
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-  <label>
-    Nombre:
-    <input formControlName="nombre" required />
-  </label>
-  <label>
-    Descripción:
-    <input formControlName="descripcion" />
-  </label>
-  <label>
-    Precio:
-    <input type="number" formControlName="precio" required min="0" />
-  </label>
-  <label>
-    Categoría:
-    <input formControlName="categoria" />
-  </label>
-  <label>
-    URL de Imagen:
-    <input formControlName="imagen" />
-  </label>
-  <button type="submit" [disabled]="productForm.invalid">
-    {{ product?.id ? 'Actualizar' : 'Agregar' }}
-  </button>
-  <button type="button" (click)="onCancel()">Cancelar</button>
-</form>
-
-<hr>
-
-<h4>Productos existentes</h4>
-<ul>
-  <li *ngFor="let p of products">
-    {{ p.nombre }} - {{ p.categoria }} - ${{ p.precio }}
+<div class="card p-3 mb-4"> 
+  <h3>{{ selectedProduct?.id ? 'Editar Producto' : 'Agregar Producto' }}</h3> 
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()"> 
+    <div class="mb-2"> 
+      <label>Nombre:</label> <input class="form-control" formControlName="nombre" required />
+    </div>
+    <div class="mb-2"> 
+      <label>Descripción:</label> <input class="form-control" formControlName="descripcion" />
+    </div>
+    <div class="mb-2">
+      <label>Precio:</label> <input type="number" class="form-control" formControlName="precio" required min="0" />
+    </div>
+    <div class="mb-2">
+      <label>Categoría:</label> <input class="form-control" formControlName="categoria" />
+    </div>
+    <div class="mb-2">
+      <label>URL de Imagen:</label> <input class="form-control" formControlName="imagen" />
+    </div>
+    <div class="d-flex gap-2 mt-2">
+    <button class="btn btn-primary" type="submit" [disabled]="productForm.invalid">
+      {{ selectedProduct?.id ? 'Actualizar' : 'Agregar' }}
+    </button>
+    <button class="btn btn-secondary" type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form> 
+</div> 
+<hr /> 
+<h4>Productos existentes</h4> 
+<ul class="list-group"> 
+  <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let p of products"> {{ p.nombre }} - {{ p.categoria }} - ${{ p.precio }}
+    <div class="btn-group">
+      <button class="btn btn-sm btn-outline-warning" (click)="onEdit(p)">Editar</button>
+      <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(p)">Eliminar</button>
+    </div>
   </li>
 </ul>
