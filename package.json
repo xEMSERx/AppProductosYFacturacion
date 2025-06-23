@@ -8,7 +8,7 @@
     "test": "ng test",
     "backend:init-db": "node backend/src/scripts/init-db.js",
     "backend:start": "node backend/src/app.js",
-    "frontend:start": "ng serve",
+    "frontend:start": "ng serve --open",
     "start": "npm-run-all backend:init-db --sequential --parallel backend:start frontend:start"
 
   },
@@ -47,7 +47,7 @@
     "npm-run-all": "^4.1.5",
     "typescript": "~5.7.2"
   },
-  "description": "<<<<<<< HEAD\r # AppParcial",
+  "description": "<<<<<<< HEAD\r # AppProductosYFacturacion",
   "main": "index.js",
   "repository": {
     "type": "git",
