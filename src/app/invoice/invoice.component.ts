@@ -62,7 +62,7 @@ export class InvoiceComponent implements OnInit {
 
     this.invoiceService.saveInvoice(invoice).subscribe({
       next: () => {
-        this.mensajeConfirmacion = '¡Compra confirmada y guardada!';
+        this.mensajeConfirmacion = '¡Compra confirmada y guardada exitosamente!';
         this.confirmarCompra.emit();
       },
       error: () => {

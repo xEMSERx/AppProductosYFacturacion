@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
+const connection = mysql.createConnection({ // Conexión a MySQL
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS
@@ -17,7 +17,7 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
 
   console.log(`✅ Base de datos '${dbName}' creada o ya existente.`);
 
-  const db = mysql.createConnection({
+  const db = mysql.createConnection({ // Conexión a la base de datos creada
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
@@ -28,9 +28,9 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
   db.query(`
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
+      nombre VARCHAR(255) NOT NULL,
       email VARCHAR(255) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL,
-      nombre VARCHAR(255) NOT NULL
+      password VARCHAR(255) NOT NULL
     )
   `, (err) => {
     if (err) {
@@ -62,10 +62,10 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
   db.query(`
     CREATE TABLE IF NOT EXISTS invoices (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      date DATETIME NOT NULL,
+      fecha DATETIME NOT NULL,
       total_ars DECIMAL(10,2) NOT NULL,
       total_usd DECIMAL(10,2) NOT NULL,
-      exchange_rate DECIMAL(10,2) NOT NULL
+      tipo_de_cambio DECIMAL(10,2) NOT NULL
     )
   `, (err) => {
     if (err) {
@@ -79,12 +79,12 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
   db.query(`
     CREATE TABLE IF NOT EXISTS invoice_products (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      invoice_id INT,
-      product_id INT,
-      name VARCHAR(255),
-      quantity INT,
-      unit_price DECIMAL(10,2),
-      FOREIGN KEY (invoice_id) REFERENCES invoices(id)
+      id_factura INT,
+      id_producto INT,
+      nombre VARCHAR(255),
+      cantidad INT,
+      precio_unitario DECIMAL(10,2),
+      FOREIGN KEY (id_factura) REFERENCES invoices(id)
     )
   `, (err) => {
     if (err) {
