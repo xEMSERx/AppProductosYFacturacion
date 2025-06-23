@@ -24,24 +24,24 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => { // Cr
     database: dbName
   });
 
-  // Crear tabla usuarios
+  // Crear tabla users
   db.query(`
-    CREATE TABLE IF NOT EXISTS usuarios (
+    CREATE TABLE IF NOT EXISTS users (
       nombre INT AUTO_INCREMENT PRIMARY KEY,
       email VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL
     )
   `, (err) => {
     if (err) {
-      console.error('❌ Error al crear la tabla usuarios:', err);
+      console.error('❌ Error al crear la tabla users:', err);
     } else {
-      console.log('✅ Tabla usuarios creada o ya existente.');
+      console.log('✅ Tabla users creada o ya existente.');
     }
   });
 
-  // Crear tabla productos
+  // Crear tabla products
   db.query(`
-    CREATE TABLE IF NOT EXISTS productos (
+    CREATE TABLE IF NOT EXISTS products (
       id INT AUTO_INCREMENT PRIMARY KEY,
       nombre VARCHAR(255) NOT NULL,
       descripcion TEXT,
@@ -51,9 +51,9 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => { // Cr
     )
   `, (err) => {
     if (err) {
-      console.error('❌ Error al crear la tabla productos:', err);
+      console.error('❌ Error al crear la tabla products:', err);
     } else {
-      console.log('✅ Tabla productos creada o ya existente.');
+      console.log('✅ Tabla products creada o ya existente.');
     }
 
     db.end(() => { // Cerramos conexión y terminamos proceso correctamente
