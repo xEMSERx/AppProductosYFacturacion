@@ -5,14 +5,16 @@ const bodyParser = require('body-parser');
 
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const invoiceRoutes = require('./routes/invoiceRoutes'); // <-- Nuevo
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/api', authRoutes); // Rutas
+app.use('/api', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/invoices', invoiceRoutes); // <-- Nuevo
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

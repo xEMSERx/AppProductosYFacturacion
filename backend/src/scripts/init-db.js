@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mysql = require('mysql2');
 
-const connection = mysql.createConnection({ // Conexión sin base de datos para poder crearla
+const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS
@@ -9,7 +9,7 @@ const connection = mysql.createConnection({ // Conexión sin base de datos para 
 
 const dbName = process.env.DB_NAME;
 
-connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => { // Crear base de datos si no existe
+connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
   if (err) {
     console.error('❌ Error al crear la base de datos:', err);
     process.exit(1);
@@ -17,7 +17,7 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => { // Cr
 
   console.log(`✅ Base de datos '${dbName}' creada o ya existente.`);
 
-  const db = mysql.createConnection({ // Ahora conectamos a la base para crear las tablas
+  const db = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
@@ -27,9 +27,10 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => { // Cr
   // Crear tabla users
   db.query(`
     CREATE TABLE IF NOT EXISTS users (
-      nombre INT AUTO_INCREMENT PRIMARY KEY,
+      id INT AUTO_INCREMENT PRIMARY KEY,
       email VARCHAR(255) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL
+      password VARCHAR(255) NOT NULL,
+      nombre VARCHAR(255) NOT NULL
     )
   `, (err) => {
     if (err) {
@@ -55,11 +56,46 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => { // Cr
     } else {
       console.log('✅ Tabla products creada o ya existente.');
     }
+  });
 
-    db.end(() => { // Cerramos conexión y terminamos proceso correctamente
+  // Crear tabla invoices
+  db.query(`
+    CREATE TABLE IF NOT EXISTS invoices (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      date DATETIME NOT NULL,
+      total_ars DECIMAL(10,2) NOT NULL,
+      total_usd DECIMAL(10,2) NOT NULL,
+      exchange_rate DECIMAL(10,2) NOT NULL
+    )
+  `, (err) => {
+    if (err) {
+      console.error('❌ Error al crear la tabla invoices:', err);
+    } else {
+      console.log('✅ Tabla invoices creada o ya existente.');
+    }
+  });
+
+  // Crear tabla invoice_products
+  db.query(`
+    CREATE TABLE IF NOT EXISTS invoice_products (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      invoice_id INT,
+      product_id INT,
+      name VARCHAR(255),
+      quantity INT,
+      unit_price DECIMAL(10,2),
+      FOREIGN KEY (invoice_id) REFERENCES invoices(id)
+    )
+  `, (err) => {
+    if (err) {
+      console.error('❌ Error al crear la tabla invoice_products:', err);
+    } else {
+      console.log('✅ Tabla invoice_products creada o ya existente.');
+    }
+
+    db.end(() => {
       console.log('✅ Conexión cerrada. Finalizando script de inicialización.');
       process.exit(0);
     });
   });
 });
-

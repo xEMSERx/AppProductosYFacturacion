@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BcraExchangeService } from '../services/bcra-exchange.service';
-import { InvoiceService, Invoice } from '../services/invoice.service';
+import { InvoiceService } from '../services/invoice.service';
 
 export interface InvoiceProduct {
   id: number;
@@ -24,7 +24,10 @@ export class InvoiceComponent implements OnInit {
   tipoCambioFecha: string = '';
   mensajeConfirmacion: string = '';
 
-  constructor(private bcraService: BcraExchangeService, private invoiceService: InvoiceService) {}
+  constructor(
+    private bcraService: BcraExchangeService,
+    private invoiceService: InvoiceService
+  ) {}
 
   ngOnInit() {
     if (this.tipoCambioUSD === null) {
@@ -50,20 +53,21 @@ export class InvoiceComponent implements OnInit {
   }
 
   confirmar() {
-  const invoice: Invoice = {
-    products: this.productos,
-    totalARS: this.totalARS,
-    totalUSD: this.totalUSD
-  };
+    const invoice = {
+      products: this.productos,
+      total_ars: this.totalARS,
+      total_usd: this.totalUSD,
+      exchange_rate: this.tipoCambioUSD
+    };
 
-  this.invoiceService.createInvoice(invoice).subscribe({
-    next: () => {
-      this.mensajeConfirmacion = '¡Compra confirmada exitosamente!';
-      this.confirmarCompra.emit();
-    },
-    error: () => {
-      this.mensajeConfirmacion = 'Ocurrió un error al guardar la factura.';
-    }
-  });
-}
+    this.invoiceService.saveInvoice(invoice).subscribe({
+      next: () => {
+        this.mensajeConfirmacion = '¡Compra confirmada y guardada!';
+        this.confirmarCompra.emit();
+      },
+      error: () => {
+        this.mensajeConfirmacion = 'Ocurrió un error al guardar la factura.';
+      }
+    });
+  }
 }
