@@ -1,28 +1,54 @@
-<h2>Lista de Productos</h2>
+<div class="card p-4 mb-4">
+  <h2 class="mb-3">Lista de Productos</h2>
 
-<!-- Campo de búsqueda -->
-<input type="text" placeholder="Buscar producto..." [(ngModel)]="searchText" />
+  <!-- Campo de búsqueda -->
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar producto..."
+      [(ngModel)]="searchText"
+    />
+  </div>
 
-<!-- Lista de productos -->
-<ul>
-  <li *ngFor="let product of products | productFilter:searchText">
-    {{ product.nombre }} - {{ product.categoria }} - ${{ product.precio }}
+  <!-- Lista de productos -->
+  <ul class="list-group mb-4">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-start flex-wrap"
+      *ngFor="let product of products | productFilter:searchText"
+    >
+      <div class="me-auto">
+        <strong>{{ product.nombre }}</strong> - {{ product.categoria }}<br />
+        <span class="text-muted">$ {{ product.precio }}</span>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+        <!-- Agregar a factura -->
+        <button class="btn btn-sm btn-outline-primary" (click)="addProduct(product)">
+          Agregar a factura
+        </button>
 
-    <!-- Selección para factura -->
-    <button (click)="addProduct(product)">Agregar a factura</button>
-    <button 
-      (click)="removeProduct(product)" 
-      [disabled]="!isProductSelected(product)">
-      Quitar de factura
-    </button>
-    <span *ngIf="getSelectedProductQuantity(product) > 0">
-      Cantidad: {{ getSelectedProductQuantity(product) }}
-    </span>
-  </li>
-</ul>
+        <!-- Quitar de factura -->
+        <button
+          class="btn btn-sm btn-outline-danger"
+          (click)="removeProduct(product)"
+          [disabled]="!isProductSelected(product)"
+        >
+          Quitar
+        </button>
 
-<!-- Mensaje si no hay productos -->
-<p *ngIf="products.length === 0">No hay productos cargados.</p>
+        <!-- Cantidad seleccionada -->
+        <span *ngIf="getSelectedProductQuantity(product) > 0" class="badge bg-secondary">
+          Cantidad: {{ getSelectedProductQuantity(product) }}
+        </span>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Mensaje si no hay productos -->
+  <p *ngIf="products.length === 0" class="text-muted">No hay productos cargados.</p>
+</div>
 
 <!-- Factura con productos seleccionados -->
-<app-invoice [productos]="selectedProducts"></app-invoice>
+<div class="card p-4">
+  <app-invoice [productos]="selectedProducts"></app-invoice>
+</div>

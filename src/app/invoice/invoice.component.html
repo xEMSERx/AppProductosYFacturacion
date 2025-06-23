@@ -1,29 +1,54 @@
-<h2>Factura</h2>
-<p>
-  <strong>Tipo de cambio USD:</strong>
-  {{ tipoCambioUSD | number:'1.2-2' }} <span *ngIf="tipoCambioFecha">({{ tipoCambioFecha }})</span>
-</p>
-<table>
-  <tr>
-    <th>Producto</th>
-    <th>Cantidad</th>
-    <th>Precio unitario (ARS)</th>
-    <th>Subtotal (ARS)</th>
-    <th>Subtotal (USD)</th>
-  </tr>
-  <tr *ngFor="let p of productos">
-    <td>{{ p.nombre }}</td>
-    <td>{{ p.cantidad }}</td>
-    <td>{{ p.precio | number:'1.2-2' }}</td>
-    <td>{{ (p.precio * p.cantidad) | number:'1.2-2' }}</td>
-    <td>
-      {{ tipoCambioUSD ? ((p.precio * p.cantidad) / tipoCambioUSD) : '' | number:'1.2-2' }}
-    </td>
-  </tr>
-</table>
-<p><strong>Total ARS:</strong> {{ totalARS | number:'1.2-2' }}</p>
-<p><strong>Total USD:</strong> {{ totalUSD | number:'1.2-2' }}</p>
-<button (click)="confirmar()">Confirmar compra</button>
-<div *ngIf="mensajeConfirmacion" style="color: green; margin-top: 10px;">
-  {{ mensajeConfirmacion }}
+<div class="card p-4 mb-4">
+  <h2 class="mb-3">Factura</h2>
+
+  <p>
+    <strong>Tipo de cambio USD:</strong>
+    {{ tipoCambioUSD | number: '1.2-2' }}
+    <span *ngIf="tipoCambioFecha">({{ tipoCambioFecha }})</span>
+  </p>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio unitario (ARS)</th>
+          <th>Subtotal (ARS)</th>
+          <th>Subtotal (USD)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of productos">
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.cantidad }}</td>
+          <td>{{ p.precio | number: '1.2-2' }}</td>
+          <td>{{ (p.precio * p.cantidad) | number: '1.2-2' }}</td>
+          <td>
+            {{
+              tipoCambioUSD
+                ? ((p.precio * p.cantidad) / tipoCambioUSD)
+                : ''
+              | number: '1.2-2'
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-3">
+    <p><strong>Total ARS:</strong> {{ totalARS | number: '1.2-2' }}</p>
+    <p><strong>Total USD:</strong> {{ totalUSD | number: '1.2-2' }}</p>
+  </div>
+
+  <button class="btn btn-success mt-3" (click)="confirmar()">Confirmar compra</button>
+
+  <div
+    *ngIf="mensajeConfirmacion"
+    class="alert alert-success mt-3"
+    role="alert"
+  >
+    {{ mensajeConfirmacion }}
+  </div>
 </div>

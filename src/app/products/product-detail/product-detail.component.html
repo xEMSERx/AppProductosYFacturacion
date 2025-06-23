@@ -1,8 +1,8 @@
 <div *ngIf="product">
-  <h3>Product Details</h3>
-  <p><strong>Name:</strong> {{ product.nombre }}</p>
-  <p><strong>Description:</strong> {{ product.descripcion }}</p>
-  <p><strong>Price:</strong> ${{ product.precio }}</p>
-  <p><strong>Category:</strong> {{ product.categoria }}</p>
+  <h3>Detalles del Producto</h3>
+  <p><strong>Nombre:</strong> {{ product.nombre }}</p>
+  <p><strong>Descripción:</strong> {{ product.descripcion }}</p>
+  <p><strong>Precio:</strong> ${{ product.precio }}</p>
+  <p><strong>Categoría:</strong> {{ product.categoria }}</p>
   <img *ngIf="product?.imagen" [src]="product.imagen" alt="Product image" width="150" />
 </div>

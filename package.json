@@ -10,7 +10,6 @@
     "backend:start": "node backend/src/app.js",
     "frontend:start": "ng serve --open",
     "start": "npm-run-all backend:init-db --sequential --parallel backend:start frontend:start"
-
   },
   "private": true,
   "dependencies": {
