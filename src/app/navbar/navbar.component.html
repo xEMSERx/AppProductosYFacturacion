@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/dashboard">Facturación</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/productos">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/factura">Factura</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/cotizacion">Cotización USD</a>
+        </li>
+      </ul>
+      <button class="btn btn-outline-light" (click)="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</nav>

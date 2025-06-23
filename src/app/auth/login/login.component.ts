@@ -33,7 +33,7 @@ onSubmit(): void {
       console.log('Login exitoso!', response);
       localStorage.setItem('token', response.token);
 
-      this.router.navigate(['/products/form']); // Redirigimos al formulario de producto
+      this.router.navigate(['/dashboard']); // Redirige al dashboard principal
     },
       error: (err) => {
         console.error('Error en login:', err);
