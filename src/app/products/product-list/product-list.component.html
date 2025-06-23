@@ -17,6 +17,17 @@
     <button (click)="selectProduct(product)">Editar</button>
     <button (click)="deleteProduct(product.id)">Eliminar</button>
     <button (click)="selectedProduct = product">Ver Detalles</button>
+
+    <!-- Selección para factura -->
+    <button (click)="addProduct(product)">Agregar a factura</button>
+    <button 
+      (click)="removeProduct(product)" 
+      [disabled]="!isProductSelected(product)">
+      Quitar de factura
+    </button>
+    <span *ngIf="getSelectedProductQuantity(product) > 0">
+      Cantidad: {{ getSelectedProductQuantity(product) }}
+    </span>
   </li>
 </ul>
 
@@ -35,3 +46,6 @@
   *ngIf="selectedProduct"
   [product]="selectedProduct">
 </app-product-detail>
+
+<!-- Factura con productos seleccionados -->
+<app-invoice [productos]="selectedProducts"></app-invoice>

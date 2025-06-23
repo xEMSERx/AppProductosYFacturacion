@@ -6,17 +6,20 @@ import { ProductDetailComponent } from '../product-detail/product-detail.compone
 import { ProductFilterPipe } from '../product-filter.pipe';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
+import { InvoiceComponent, InvoiceProduct } from '../../invoice/invoice.component';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProductFormComponent, ProductDetailComponent, ProductFilterPipe]
+  imports: [CommonModule, FormsModule, ProductFormComponent, ProductDetailComponent, ProductFilterPipe, InvoiceComponent]
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
   selectedProduct: Product | null = null;
   searchText: string = '';
+
+  selectedProducts: InvoiceProduct[] = [];
 
   constructor(private productService: ProductService) {}
 
@@ -34,5 +37,39 @@ export class ProductListComponent implements OnInit {
 
   deleteProduct(id: number) {
     this.productService.delete(id).subscribe(() => this.loadProducts());
+  }
+
+  addProduct(product: Product) {
+    const existing = this.selectedProducts.find(p => p.id === product.id);
+    if (existing) {
+      existing.cantidad++;
+    } else {
+      this.selectedProducts.push({
+        id: product.id,
+        nombre: product.nombre,
+        cantidad: 1,
+        precio: product.precio
+      });
+    }
+  }
+
+  removeProduct(product: Product) {
+    const idx = this.selectedProducts.findIndex(p => p.id === product.id);
+    if (idx > -1) {
+      if (this.selectedProducts[idx].cantidad > 1) {
+        this.selectedProducts[idx].cantidad--;
+      } else {
+        this.selectedProducts.splice(idx, 1);
+      }
+    }
+  }
+
+  isProductSelected(product: Product): boolean {
+    return this.selectedProducts.some(sel => sel.id === product.id);
+  }
+
+  getSelectedProductQuantity(product: Product): number {
+    const found = this.selectedProducts.find(sel => sel.id === product.id);
+    return found ? found.cantidad : 0;
   }
 }
