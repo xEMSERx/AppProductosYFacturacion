@@ -1,4 +1,8 @@
 <h2>Factura</h2>
+<p>
+  <strong>Tipo de cambio USD:</strong>
+  {{ tipoCambioUSD | number:'1.2-2' }} <span *ngIf="tipoCambioFecha">({{ tipoCambioFecha }})</span>
+</p>
 <table>
   <tr>
     <th>Producto</th>
@@ -12,9 +16,14 @@
     <td>{{ p.cantidad }}</td>
     <td>{{ p.precio | number:'1.2-2' }}</td>
     <td>{{ (p.precio * p.cantidad) | number:'1.2-2' }}</td>
-    <td>{{ ((p.precio * p.cantidad) / tipoCambioUSD) | number:'1.2-2' }}</td>
+    <td>
+      {{ tipoCambioUSD ? ((p.precio * p.cantidad) / tipoCambioUSD) : '' | number:'1.2-2' }}
+    </td>
   </tr>
 </table>
 <p><strong>Total ARS:</strong> {{ totalARS | number:'1.2-2' }}</p>
 <p><strong>Total USD:</strong> {{ totalUSD | number:'1.2-2' }}</p>
 <button (click)="confirmar()">Confirmar compra</button>
+<div *ngIf="mensajeConfirmacion" style="color: green; margin-top: 10px;">
+  {{ mensajeConfirmacion }}
+</div>
