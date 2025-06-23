@@ -1,8 +1,7 @@
 require('dotenv').config();
 const mysql = require('mysql2');
 
-// Conexión sin base de datos para poder crearla
-const connection = mysql.createConnection({
+const connection = mysql.createConnection({ // Conexión sin base de datos para poder crearla
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS
@@ -10,8 +9,7 @@ const connection = mysql.createConnection({
 
 const dbName = process.env.DB_NAME;
 
-// Crear base de datos si no existe
-connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
+connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => { // Crear base de datos si no existe
   if (err) {
     console.error('❌ Error al crear la base de datos:', err);
     process.exit(1);
@@ -19,8 +17,7 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
 
   console.log(`✅ Base de datos '${dbName}' creada o ya existente.`);
 
-  // Ahora conectamos a la base para crear las tablas
-  const db = mysql.createConnection({
+  const db = mysql.createConnection({ // Ahora conectamos a la base para crear las tablas
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
@@ -42,9 +39,9 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
     }
   });
 
-  // Crear tabla products
+  // Crear tabla productos
   db.query(`
-    CREATE TABLE IF NOT EXISTS products (
+    CREATE TABLE IF NOT EXISTS productos (
       id INT AUTO_INCREMENT PRIMARY KEY,
       nombre VARCHAR(255) NOT NULL,
       descripcion TEXT,
@@ -54,13 +51,12 @@ connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``, (err) => {
     )
   `, (err) => {
     if (err) {
-      console.error('❌ Error al crear la tabla products:', err);
+      console.error('❌ Error al crear la tabla productos:', err);
     } else {
-      console.log('✅ Tabla products creada o ya existente.');
+      console.log('✅ Tabla productos creada o ya existente.');
     }
 
-    // Cerramos conexión y terminamos proceso correctamente
-    db.end(() => {
+    db.end(() => { // Cerramos conexión y terminamos proceso correctamente
       console.log('✅ Conexión cerrada. Finalizando script de inicialización.');
       process.exit(0);
     });
