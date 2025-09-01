@@ -1,0 +1,12 @@
+<div class="chat-container">
+  <div class="messages">
+    <div *ngFor="let msg of messages$ | async" class="message">
+      <strong>{{ msg.senderName }} ({{ msg.senderRole }}):</strong> {{ msg.text }}
+      <span class="timestamp">{{ msg.timestamp | date:'shortTime' }}</span>
+    </div>
+  </div>
+  <div class="input-area">
+    <input [(ngModel)]="newMessage" placeholder="Escribe un mensaje..." />
+    <button (click)="sendMessage()">Enviar</button>
+  </div>
+</div>
